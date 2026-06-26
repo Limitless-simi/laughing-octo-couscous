@@ -110,12 +110,17 @@ document.getElementById('js-site-subtitle').textContent = CONFIG.siteSubtitle;
 // ── Build one section per group ────────────────────────────────────────────────
 const groupsContainer = document.getElementById('js-groups');
 
+// Each group gets its own vibrant accent colour (amber, coral, jade, …).
+// This both adds colour and makes the groups easier to tell apart.
+const ACCENTS = ['#E8A317', '#E0573B', '#27B0A0', '#B85CA6'];
+
 CONFIG.groups.forEach((group, index) => {
   // Decorative separator between groups (not before the first one)
   if (index > 0) groupsContainer.appendChild(buildSeparator());
 
   const section = document.createElement('section');
   section.className = 'group';
+  section.style.setProperty('--accent', ACCENTS[index % ACCENTS.length]);
 
   section.appendChild(buildHeader(group, index));
   if (group.musicSrc) section.appendChild(buildPlayer(group));

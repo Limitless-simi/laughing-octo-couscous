@@ -1,24 +1,35 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --ground:     #0D0A07;
-  --card:       #1A1208;
-  --brown:      #3B1F0A;
-  --gold:       #C8860A;
-  --gold-light: #E8B84B;
-  --parchment:  #E8D5B0;
-  --muted:      #8A7560;
-  --text:       #D4C09A;
+  /* Base palette */
+  --ground:     #0B0710;
+  --card:       #181019;
+  --brown:      #2A1A22;
+  --gold:       #E8A317;
+  --gold-light: #F6C453;
+  --parchment:  #F2E6CC;
+  --muted:      #9A8AA0;
+  --text:       #D8C7AE;
 
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body:    'Spectral', serif;
-  --font-mono:    'JetBrains Mono', monospace;
+  /* Per-group accent — overridden on each .group by script.js.
+     Falls back to gold anywhere it isn't set. */
+  --accent: var(--gold);
+
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'Fraunces', serif;
+  --font-mono:    'Space Mono', monospace;
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--ground);
+  /* Layered colour glows give the page depth instead of one flat brown */
+  background:
+    radial-gradient(1200px 820px at 50% -12%, rgba(232,163,23,0.12), transparent 60%),
+    radial-gradient(900px 700px at 88% 18%,  rgba(39,176,160,0.08), transparent 60%),
+    radial-gradient(900px 760px at 6% 82%,   rgba(224,87,59,0.08),  transparent 60%),
+    var(--ground);
+  background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-body);
   font-weight: 300;
@@ -46,18 +57,22 @@ body {
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 20px;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .site-title {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(2.6rem, 6.5vw, 5.2rem);
-  letter-spacing: -0.015em;
-  color: var(--parchment);
-  line-height: 1.04;
-  max-width: 900px;
+  font-weight: 800;
+  font-size: clamp(2.8rem, 7vw, 5.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  max-width: 960px;
   margin-bottom: 18px;
+  /* Vibrant tri-colour gradient title */
+  background: linear-gradient(100deg, var(--gold-light) 0%, #E0573B 48%, #27B0A0 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .site-subtitle {
@@ -76,7 +91,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  opacity: 0.45;
+  opacity: 0.5;
   animation: bob 2.4s ease-in-out infinite;
 }
 .scroll-cue span {
@@ -112,14 +127,14 @@ body {
   align-items: center;
   justify-content: center;
   gap: 20px;
-  padding: 36px 0;
+  padding: 40px 0;
 }
 .group-sep::before,
 .group-sep::after {
   content: '';
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(200,134,10,0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(232,163,23,0.4), transparent);
 }
 .group-sep i {
   width: 9px;
@@ -127,7 +142,7 @@ body {
   flex-shrink: 0;
   transform: rotate(45deg);
   border: 1px solid var(--gold);
-  background: rgba(200,134,10,0.15);
+  background: rgba(232,163,23,0.18);
 }
 
 /* ─── GROUP SECTION ─── */
@@ -141,6 +156,21 @@ body {
   align-items: center;
 }
 
+/* Soft accent glow at the top of each group for colour + separation */
+.group::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 460px;
+  max-width: 90%;
+  height: 320px;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 18%, transparent), transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+
 .group-header {
   text-align: center;
   margin-bottom: 48px;
@@ -148,12 +178,12 @@ body {
 .group-index {
   display: block;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 800;
   font-size: clamp(3.4rem, 10vw, 6.5rem);
   line-height: 1;
   letter-spacing: 0.02em;
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(200,134,10,0.45);
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--accent) 75%, transparent);
   margin-bottom: 14px;
   user-select: none;
 }
@@ -162,15 +192,14 @@ body {
   font-size: 0.62rem;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.75;
+  color: var(--accent);
   margin-bottom: 16px;
 }
 .group-title {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(1.9rem, 4.2vw, 3rem);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   color: var(--parchment);
   line-height: 1.1;
   margin-bottom: 18px;
@@ -183,8 +212,7 @@ body {
   color: var(--muted);
 }
 .group-contributors span {
-  color: var(--gold);
-  opacity: 0.7;
+  color: var(--accent);
   margin-right: 6px;
 }
 
@@ -205,9 +233,9 @@ body {
   background: conic-gradient(
     from 0deg,
     transparent 0%,
-    rgba(200,134,10,0.12) 20%,
-    rgba(232,184,75,0.22) 50%,
-    rgba(200,134,10,0.12) 80%,
+    color-mix(in srgb, var(--accent) 16%, transparent) 20%,
+    color-mix(in srgb, var(--accent) 30%, transparent) 50%,
+    color-mix(in srgb, var(--accent) 16%, transparent) 80%,
     transparent 100%
   );
   animation: spin 18s linear infinite;
@@ -219,7 +247,7 @@ body {
   position: absolute;
   inset: 20px;
   border-radius: 50%;
-  border: 1px solid rgba(200,134,10,0.18);
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
   animation: pulse 4s ease-in-out infinite;
 }
 
@@ -237,9 +265,9 @@ body {
   overflow: hidden;
   background: var(--card);
   box-shadow:
-    0 0 0 1px rgba(200,134,10,0.2),
+    0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent),
     0 24px 80px rgba(0,0,0,0.7),
-    0 0 60px rgba(200,134,10,0.06);
+    0 0 70px color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
 .ar-frame-wrap iframe {
@@ -253,9 +281,9 @@ body {
 .ar-placeholder {
   width: min(520px, 90vw);
   aspect-ratio: 9/14;
-  border: 1px dashed rgba(200,134,10,0.4);
+  border: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent);
   border-radius: 12px;
-  background: rgba(26,18,8,0.4);
+  background: rgba(24,16,25,0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -266,10 +294,10 @@ body {
 }
 .ar-placeholder span {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 700;
   font-size: 1.05rem;
-  letter-spacing: 0.02em;
-  color: var(--gold);
+  letter-spacing: 0.01em;
+  color: var(--accent);
 }
 .ar-placeholder small {
   font-family: var(--font-mono);
@@ -286,9 +314,9 @@ body {
 .music-bar {
   width: min(520px, 90vw);
   margin: 0 auto 28px;
-  background: rgba(26,18,8,0.85);
+  background: rgba(24,16,25,0.85);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(200,134,10,0.18);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
   border-radius: 12px;
   padding: 14px 18px;
   display: flex;
@@ -300,15 +328,15 @@ body {
 .music-play-btn {
   width: 38px; height: 38px;
   border-radius: 50%;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--accent);
   background: transparent;
-  color: var(--gold);
+  color: var(--accent);
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   transition: background 0.2s, color 0.2s;
 }
-.music-play-btn:hover { background: var(--gold); color: var(--ground); }
+.music-play-btn:hover { background: var(--accent); color: var(--ground); }
 
 .music-info {
   flex: 1;
@@ -346,7 +374,7 @@ body {
   border-radius: 2px;
   appearance: none;
   cursor: pointer;
-  accent-color: var(--gold);
+  accent-color: var(--accent);
 }
 .music-time {
   font-family: var(--font-mono);
@@ -365,7 +393,7 @@ body {
   flex-shrink: 0;
   transition: color 0.2s;
 }
-.music-vol-btn:hover { color: var(--gold); }
+.music-vol-btn:hover { color: var(--accent); }
 
 .music-vol-slider {
   width: 68px;
@@ -373,7 +401,7 @@ body {
   appearance: none;
   background: var(--brown);
   border-radius: 2px;
-  accent-color: var(--gold);
+  accent-color: var(--accent);
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -395,9 +423,9 @@ body {
 
 .story-body p:first-child::first-letter {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 800;
   font-size: 3.2em;
-  color: var(--gold);
+  color: var(--accent);
   float: left;
   line-height: 0.8;
   margin: 0.08em 0.1em 0 0;
@@ -406,13 +434,13 @@ body {
 .story-divider {
   width: 48px;
   height: 1px;
-  background: var(--gold);
-  opacity: 0.35;
+  background: var(--accent);
+  opacity: 0.4;
   margin: 48px 0;
 }
 
 .story-quote {
-  border-left: 2px solid var(--gold);
+  border-left: 2px solid var(--accent);
   padding-left: 24px;
   margin: 40px 0;
 }
@@ -447,7 +475,7 @@ body {
 @media (max-width: 600px) {
   .music-progress-wrap { display: none; }
   .music-vol-slider    { display: none; }
-  .group               { padding: 90px 22px; }
+  .group               { padding: 80px 22px 90px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
