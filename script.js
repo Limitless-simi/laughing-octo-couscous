@@ -179,6 +179,58 @@ const navObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.group').forEach((sec) => navObserver.observe(sec));
 
+// ── Mouse interactions (desktop / fine-pointer only) ────────────────────────────
+const finePointer  = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (finePointer && !reduceMotion) {
+
+  // 1. Cursor spotlight that smoothly trails the pointer
+  const glow = document.createElement('div');
+  glow.className = 'cursor-glow';
+  document.body.appendChild(glow);
+
+  let mx = window.innerWidth / 2,  my = window.innerHeight / 2;
+  let gx = mx, gy = my;
+  window.addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; });
+  (function trail() {
+    gx += (mx - gx) * 0.12;
+    gy += (my - gy) * 0.12;
+    glow.style.transform = `translate(${gx}px, ${gy}px)`;
+    requestAnimationFrame(trail);
+  })();
+
+  // 2. 3D tilt toward the cursor on the main objects
+  const addTilt = (el, max = 8) => {
+    el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width  - 0.5;
+      const py = (e.clientY - r.top)  / r.height - 0.5;
+      el.style.transition = 'transform 0.08s ease';
+      el.style.transform  =
+        `perspective(900px) rotateY(${px * max}deg) rotateX(${-py * max}deg) scale(1.02)`;
+    });
+    el.addEventListener('pointerleave', () => {
+      el.style.transition = 'transform 0.5s ease';
+      el.style.transform  = '';
+    });
+  };
+  document.querySelectorAll('.ar-frame-wrap, .ar-placeholder, .music-bar')
+    .forEach((el) => addTilt(el));
+
+  // 3. Magnetic pull on the small nav dots
+  const addMagnetic = (el, strength = 0.35) => {
+    el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top  + r.height / 2);
+      el.style.transform = `translate(${dx * strength}px, ${dy * strength}px) scale(1.18)`;
+    });
+    el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+  };
+  document.querySelectorAll('.dot-nav-item').forEach((el) => addMagnetic(el));
+}
+
 // ── Decorative separator between group sections ────────────────────────────────
 function buildSeparator() {
   const sep = document.createElement('div');

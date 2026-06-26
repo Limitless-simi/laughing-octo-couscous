@@ -507,6 +507,25 @@ body {
   box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 45%, transparent);
 }
 
+/* ─── CURSOR SPOTLIGHT ─── */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 420px;
+  height: 420px;
+  margin: -210px 0 0 -210px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(closest-side,
+    rgba(246,196,83,0.12),
+    rgba(224,87,59,0.07) 45%,
+    transparent 72%);
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
 /* ─── GRAIN ─── */
 .grain {
   position: fixed;
