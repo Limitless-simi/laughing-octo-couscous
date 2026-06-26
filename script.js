@@ -110,28 +110,59 @@ document.getElementById('js-site-subtitle').textContent = CONFIG.siteSubtitle;
 // ── Build one section per group ────────────────────────────────────────────────
 const groupsContainer = document.getElementById('js-groups');
 
-CONFIG.groups.forEach((group) => {
+CONFIG.groups.forEach((group, index) => {
+  // Decorative separator between groups (not before the first one)
+  if (index > 0) groupsContainer.appendChild(buildSeparator());
+
   const section = document.createElement('section');
   section.className = 'group';
 
-  section.appendChild(buildHeader(group));
+  section.appendChild(buildHeader(group, index));
   if (group.musicSrc) section.appendChild(buildPlayer(group));
   section.appendChild(buildAR(group));
   section.appendChild(buildStory(group));
 
+  // Stagger the reveal of this group's blocks as they scroll into view
+  section.querySelectorAll('.reveal').forEach((el, k) => {
+    el.style.transitionDelay = (k * 90) + 'ms';
+  });
+
   groupsContainer.appendChild(section);
 });
 
-// ── Group header (name, object title, contributors) ────────────────────────────
-function buildHeader(group) {
+// ── Reveal-on-scroll (fade + slide up) ──────────────────────────────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+// ── Decorative separator between group sections ────────────────────────────────
+function buildSeparator() {
+  const sep = document.createElement('div');
+  sep.className = 'group-sep';
+  sep.innerHTML = '<i></i>';
+  return sep;
+}
+
+// ── Group header (index number, name, object title, contributors) ──────────────
+function buildHeader(group, index) {
   const header = document.createElement('div');
-  header.className = 'group-header';
+  header.className = 'group-header reveal';
+
+  const number = String(index + 1).padStart(2, '0');
 
   const contributors = (group.contributors && group.contributors.length)
     ? `<p class="group-contributors"><span>Contributors</span> ${group.contributors.join(' · ')}</p>`
     : '';
 
   header.innerHTML = `
+    <span class="group-index">${number}</span>
     <p class="group-label">${group.groupName}</p>
     <h2 class="group-title">${group.objectTitle}</h2>
     ${contributors}
@@ -144,7 +175,7 @@ function buildAR(group) {
   const stage = document.createElement('div');
 
   if (/^https?:/i.test(group.arEmbedSrc || '')) {
-    stage.className = 'ar-stage';
+    stage.className = 'ar-stage reveal';
     stage.innerHTML = `
       <div class="aureole"></div>
       <div class="ar-frame-wrap">
@@ -152,7 +183,7 @@ function buildAR(group) {
       </div>`;
     stage.querySelector('iframe').src = group.arEmbedSrc;
   } else {
-    stage.className = 'ar-placeholder';
+    stage.className = 'ar-placeholder reveal';
     stage.innerHTML = `
       <span>AR experience goes here</span>
       <small>Paste your Web-AR link into <code>arEmbedSrc</code> for this group in <code>script.js</code></small>`;
@@ -163,7 +194,7 @@ function buildAR(group) {
 // ── Story paragraphs (+ optional pull quote after the 2nd paragraph) ────────────
 function buildStory(group) {
   const wrap = document.createElement('div');
-  wrap.className = 'story-body';
+  wrap.className = 'story-body reveal';
 
   (group.story || []).forEach((para, i) => {
     const p = document.createElement('p');
@@ -192,7 +223,7 @@ function buildStory(group) {
 // ── Audio player (self-contained, one per group) ───────────────────────────────
 function buildPlayer(group) {
   const bar = document.createElement('div');
-  bar.className = 'music-bar';
+  bar.className = 'music-bar reveal';
   bar.innerHTML = `
     <button class="music-play-btn" aria-label="Play / Pause">
       <svg class="play-icon" width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
