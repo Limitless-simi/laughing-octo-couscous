@@ -21,19 +21,6 @@
   <h1 class="hero-title" id="js-title"></h1>
   <p class="hero-subtitle" id="js-subtitle"></p>
 
-  <div class="ar-stage">
-    <div class="aureole"></div>
-    <div class="ar-frame-wrap">
-      <iframe
-        id="js-ar-frame"
-        src=""
-        allowfullscreen
-        allow=""
-        style="border:none;"
-      ></iframe>
-    </div>
-  </div>
-
   <!-- MUSIC PLAYER -->
   <div class="music-bar" id="js-music-bar" style="display:none">
     <button class="music-play-btn" id="js-play-btn" aria-label="Play / Pause">
@@ -64,6 +51,19 @@
     <input type="range" class="music-vol-slider" id="js-vol" min="0" max="1" step="0.05" value="0.8" />
 
     <audio id="js-audio" preload="metadata" loop></audio>
+  </div>
+
+  <div class="ar-stage">
+    <div class="aureole"></div>
+    <div class="ar-frame-wrap">
+      <iframe
+        id="js-ar-frame"
+        src=""
+        allowfullscreen
+        allow=""
+        style="border:none;"
+      ></iframe>
+    </div>
   </div>
 
   <div class="scroll-cue">

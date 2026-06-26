@@ -216,7 +216,7 @@ body {
 /* ─── MUSIC PLAYER ─── */
 .music-bar {
   width: min(520px, 90vw);
-  margin: 28px auto 0;
+  margin: 0 auto 28px;
   background: rgba(26,18,8,0.85);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(200,134,10,0.18);
