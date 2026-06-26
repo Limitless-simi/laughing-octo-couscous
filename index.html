@@ -226,16 +226,17 @@
 
     /* ─── MUSIC PLAYER ─── */
     .music-bar {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: rgba(13,10,7,0.92);
+      width: min(520px, 90vw);
+      margin: 28px auto 0;
+      background: rgba(26,18,8,0.85);
       backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(200,134,10,0.15);
-      padding: 14px 24px;
+      border: 1px solid rgba(200,134,10,0.18);
+      border-radius: 12px;
+      padding: 14px 18px;
       display: flex;
       align-items: center;
       gap: 16px;
-      z-index: 100;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
     }
 
     .music-play-btn {
@@ -384,8 +385,9 @@ const CONFIG = {
   pullQuoteSource: "— Oral tradition, transcribed",
 
   // ── MUSIC ──────────────────────────────────────────────────
-  // Paste a direct URL to an .mp3 or .ogg file, or leave empty ("") to hide the player
-  musicSrc:    "",
+  // Path to your audio file in the /music folder (e.g. "music/track.mp3"),
+  // or leave empty ("") to hide the player
+  musicSrc:    "music/track.mp3",
   musicTrack:  "Echoes of the Compound",
   musicArtist: "Unknown · Field Recording, Lagos 1974",
 
@@ -413,6 +415,38 @@ const CONFIG = {
     </div>
   </div>
 
+  <!-- MUSIC PLAYER -->
+  <div class="music-bar" id="js-music-bar" style="display:none">
+    <button class="music-play-btn" id="js-play-btn" aria-label="Play / Pause">
+      <svg id="js-play-icon" width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+        <polygon points="3,1 13,7 3,13"/>
+      </svg>
+    </button>
+
+    <div class="music-info">
+      <div class="music-track-name" id="js-track-name"></div>
+      <div class="music-artist" id="js-artist"></div>
+    </div>
+
+    <div class="music-progress-wrap">
+      <input type="range" class="music-progress" id="js-progress" min="0" max="100" value="0" step="0.1" />
+      <div class="music-time">
+        <span id="js-cur">0:00</span>
+        <span id="js-dur">0:00</span>
+      </div>
+    </div>
+
+    <button class="music-vol-btn" id="js-mute-btn" aria-label="Toggle mute">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M9 3L5 6H2v4h3l4 3V3z"/>
+        <path id="js-vol-wave" d="M11.5 5.5a3.5 3.5 0 0 1 0 5M13.5 3.5a6.5 6.5 0 0 1 0 9"/>
+      </svg>
+    </button>
+    <input type="range" class="music-vol-slider" id="js-vol" min="0" max="1" step="0.05" value="0.8" />
+
+    <audio id="js-audio" preload="metadata" loop></audio>
+  </div>
+
   <div class="scroll-cue">
     <span>Read the story</span>
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -426,38 +460,6 @@ const CONFIG = {
   <p class="section-label">Origin &amp; Context</p>
   <div class="story-body" id="js-story"></div>
 </section>
-
-<!-- MUSIC PLAYER -->
-<div class="music-bar" id="js-music-bar" style="display:none">
-  <button class="music-play-btn" id="js-play-btn" aria-label="Play / Pause">
-    <svg id="js-play-icon" width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
-      <polygon points="3,1 13,7 3,13"/>
-    </svg>
-  </button>
-
-  <div class="music-info">
-    <div class="music-track-name" id="js-track-name"></div>
-    <div class="music-artist" id="js-artist"></div>
-  </div>
-
-  <div class="music-progress-wrap">
-    <input type="range" class="music-progress" id="js-progress" min="0" max="100" value="0" step="0.1" />
-    <div class="music-time">
-      <span id="js-cur">0:00</span>
-      <span id="js-dur">0:00</span>
-    </div>
-  </div>
-
-  <button class="music-vol-btn" id="js-mute-btn" aria-label="Toggle mute">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-      <path d="M9 3L5 6H2v4h3l4 3V3z"/>
-      <path id="js-vol-wave" d="M11.5 5.5a3.5 3.5 0 0 1 0 5M13.5 3.5a6.5 6.5 0 0 1 0 9"/>
-    </svg>
-  </button>
-  <input type="range" class="music-vol-slider" id="js-vol" min="0" max="1" step="0.05" value="0.8" />
-
-  <audio id="js-audio" preload="metadata" loop></audio>
-</div>
 
 
 <script>
