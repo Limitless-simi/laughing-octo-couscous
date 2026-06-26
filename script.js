@@ -120,6 +120,7 @@ CONFIG.groups.forEach((group, index) => {
 
   const section = document.createElement('section');
   section.className = 'group';
+  section.id = 'group-' + (index + 1);
   section.style.setProperty('--accent', ACCENTS[index % ACCENTS.length]);
 
   section.appendChild(buildHeader(group, index));
@@ -135,7 +136,7 @@ CONFIG.groups.forEach((group, index) => {
   groupsContainer.appendChild(section);
 });
 
-// ── Reveal-on-scroll (fade + slide up) ──────────────────────────────────────────
+// ── Reveal-on-scroll (fade + slide / scale) ─────────────────────────────────────
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -146,6 +147,37 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
 document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+// ── Side dot-navigation (1 · 2 · 3) ─────────────────────────────────────────────
+const nav = document.createElement('nav');
+nav.className = 'dot-nav';
+nav.setAttribute('aria-label', 'Jump to a group');
+
+CONFIG.groups.forEach((group, index) => {
+  const item = document.createElement('a');
+  item.className = 'dot-nav-item';
+  item.href = '#group-' + (index + 1);
+  item.textContent = index + 1;
+  item.title = group.groupName || ('Group ' + (index + 1));
+  item.style.setProperty('--accent', ACCENTS[index % ACCENTS.length]);
+  nav.appendChild(item);
+});
+
+document.body.appendChild(nav);
+
+// Highlight the nav item for whichever group is centred in the viewport
+const navItems = Array.from(nav.querySelectorAll('.dot-nav-item'));
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      navItems.forEach((it) =>
+        it.classList.toggle('is-active', it.getAttribute('href') === '#' + entry.target.id)
+      );
+    }
+  });
+}, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+document.querySelectorAll('.group').forEach((sec) => navObserver.observe(sec));
 
 // ── Decorative separator between group sections ────────────────────────────────
 function buildSeparator() {
@@ -180,7 +212,7 @@ function buildAR(group) {
   const stage = document.createElement('div');
 
   if (/^https?:/i.test(group.arEmbedSrc || '')) {
-    stage.className = 'ar-stage reveal';
+    stage.className = 'ar-stage reveal reveal--scale';
     stage.innerHTML = `
       <div class="aureole"></div>
       <div class="ar-frame-wrap">
@@ -188,7 +220,7 @@ function buildAR(group) {
       </div>`;
     stage.querySelector('iframe').src = group.arEmbedSrc;
   } else {
-    stage.className = 'ar-placeholder reveal';
+    stage.className = 'ar-placeholder reveal reveal--scale';
     stage.innerHTML = `
       <span>AR experience goes here</span>
       <small>Paste your Web-AR link into <code>arEmbedSrc</code> for this group in <code>script.js</code></small>`;
@@ -199,7 +231,7 @@ function buildAR(group) {
 // ── Story paragraphs (+ optional pull quote after the 2nd paragraph) ────────────
 function buildStory(group) {
   const wrap = document.createElement('div');
-  wrap.className = 'story-body reveal';
+  wrap.className = 'story-body reveal reveal--left';
 
   (group.story || []).forEach((para, i) => {
     const p = document.createElement('p');
