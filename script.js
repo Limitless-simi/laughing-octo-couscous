@@ -268,7 +268,9 @@ function buildAR(group) {
     stage.innerHTML = `
       <div class="aureole"></div>
       <div class="ar-frame-wrap">
-        <iframe allowfullscreen allow="${group.arPermissions || ''}" style="border:none;"></iframe>
+        <iframe title="${group.objectTitle || 'Cultural object'} — AR experience"
+                loading="lazy" allowfullscreen
+                allow="${group.arPermissions || ''}" style="border:none;"></iframe>
       </div>`;
     stage.querySelector('iframe').src = group.arEmbedSrc;
   } else {
@@ -359,17 +361,19 @@ function buildPlayer(group) {
   const PLAY_ICON  = `<polygon points="3,1 13,7 3,13"/>`;
   const PAUSE_ICON = `<rect x="2" y="1" width="4" height="12"/><rect x="8" y="1" width="4" height="12"/>`;
 
-  let playing = false;
   playBtn.addEventListener('click', () => {
-    if (playing) {
-      audio.pause();
-      playIcon.innerHTML = PLAY_ICON;
-    } else {
+    if (audio.paused) {
+      // Only one group's audio plays at a time — pause any others first
+      document.querySelectorAll('audio').forEach((a) => { if (a !== audio) a.pause(); });
       audio.play().catch(() => {});
-      playIcon.innerHTML = PAUSE_ICON;
+    } else {
+      audio.pause();
     }
-    playing = !playing;
   });
+
+  // Keep the button icon in sync with the real playback state
+  audio.addEventListener('play',  () => { playIcon.innerHTML = PAUSE_ICON; });
+  audio.addEventListener('pause', () => { playIcon.innerHTML = PLAY_ICON; });
 
   audio.addEventListener('loadedmetadata', () => { durEl.textContent = fmt(audio.duration); });
   audio.addEventListener('timeupdate', () => {
