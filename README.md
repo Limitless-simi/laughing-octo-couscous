@@ -30,3 +30,16 @@ Open it and scroll to the `CONFIG` block at the top. Find your group
 - Don't touch anything below the `LOGIC` line in `script.js`.
 - Keep the commas, quotes, and `{ }` braces exactly as they are.
 - Styling lives in [`styles.css`](styles.css); page structure in [`index.html`](index.html).
+
+## What happens automatically
+- Each group gets its **own accent colour** (amber → coral → jade) and a big
+  index number (01 / 02 / 03) — you don't set these.
+- The side **1 · 2 · 3 navigation** and the **footer year** update themselves
+  from your groups, so adding a 4th group just works.
+- Scroll animations and the cursor effects are automatic (and turn off for
+  visitors who prefer reduced motion).
+
+## Previewing your changes
+Open [`index.html`](index.html) in a browser (double-click it). After editing,
+**hard-refresh** with `Ctrl + Shift + R` so the browser reloads `script.js` and
+`styles.css` instead of using cached copies.

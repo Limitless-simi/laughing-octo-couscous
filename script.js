@@ -107,6 +107,10 @@ document.getElementById('js-site-label').textContent    = CONFIG.siteLabel;
 document.getElementById('js-site-title').textContent    = CONFIG.siteTitle;
 document.getElementById('js-site-subtitle').textContent = CONFIG.siteSubtitle;
 
+// Footer year (auto-updates)
+const yearEl = document.getElementById('js-year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
+
 // ── Build one section per group ────────────────────────────────────────────────
 const groupsContainer = document.getElementById('js-groups');
 
