@@ -50,8 +50,7 @@ const CONFIG = {
       objectTitle:  "artificial palm in vase",
       contributors: ["Nike", "Ugo", "Elijah", "Adex", "Dotun"],
 
-      arEmbedSrc:    "<iframe src='https://projects.web-ar.studio/configurator/2d12d111f6/?id=2694488929_494106&is_transparent_bg=true&activate_ar=true' allowFullScreen
-allow='camera;autoplay;xr-spatial-tracking' style="border: transparent"></iframe>",
+      arEmbedSrc:    "https://projects.web-ar.studio/configurator/2d12d111f6/?id=2694488929_494106&is_transparent_bg=true&activate_ar=true",
       arPermissions: "camera;autoplay;xr-spatial-tracking",
 
       // Add your audio file to the /music folder, then set the path below,
@@ -76,8 +75,7 @@ allow='camera;autoplay;xr-spatial-tracking' style="border: transparent"></iframe
       objectTitle:  "Montgomery Artifacts ",
       contributors: ["David Ekanem", "Omobowale", "Yohanna Waliya", "Uangbaoje Faith", "Ogbonna Precious"],
 
-      arEmbedSrc:    "<iframe src='https://projects.web-ar.studio/configurator/a4798e429c/?id=2694488929_494112&is_transparent_bg=true&activate_ar=true' allowFullScreen
-allow='camera;autoplay;xr-spatial-tracking' style="border: transparent"></iframe>",
+      arEmbedSrc:    "https://projects.web-ar.studio/configurator/a4798e429c/?id=2694488929_494112&is_transparent_bg=true&activate_ar=true",
       arPermissions: "camera;autoplay;xr-spatial-tracking",
 
       // Add your audio file to the /music folder, then set the path below,
@@ -87,9 +85,8 @@ allow='camera;autoplay;xr-spatial-tracking' style="border: transparent"></iframe
       musicArtist: "Group Three",
 
       story: [
-        "This Montgomery artefact is captured on the 27th June 2026at the 14 Montgomery Road, Yaba, Lagos. It is created as a memorial of the benevolence of the ARVRAfrica, Goethe Institute and Imisi3D who trained us on preserving Nigerian Cultural heritage.",
-        "We, the Massive Creators Team believes in all possibilities. This day, we have stepped into the world of XR immersive experience. We believe in restoring the lost history and cultural heritage of Nigeria and Africa.
-",
+        "This Montgomery artefact is captured on the 27th June 2026 at 14 Montgomery Road, Yaba, Lagos. It is created as a memorial of the benevolence of the ARVRAfrica, Goethe Institute and Imisi3D who trained us on preserving Nigerian Cultural heritage.",
+        "We, the Massive Creators Team believes in all possibilities. This day, we have stepped into the world of XR immersive experience. We believe in restoring the lost history and cultural heritage of Nigeria and Africa.",
         "What emerged was a small study in how humans relate to nature. First we imitate it, shaping plastic into leaves and wire into stems. Then we document the imitation, preserving it in data as though it were worth remembering. The scanner captured nothing wild or alive that day yet somehow, in the act of capturing, it asked a quiet question: what exactly are we trying to hold onto?",
       ],
 
@@ -266,11 +263,23 @@ function buildHeader(group, index) {
   return header;
 }
 
+// Accept either a plain URL OR a full <iframe ...> embed code pasted from Web-AR
+function extractEmbedUrl(raw) {
+  if (!raw) return '';
+  const s = String(raw).trim();
+  // Pull the src out of a pasted <iframe src="..."> / src='...'> tag
+  const match = s.match(/src\s*=\s*["']([^"']+)["']/i);
+  if (match) return match[1];
+  // Otherwise treat it as a bare URL
+  return /^https?:/i.test(s) ? s : '';
+}
+
 // ── AR embed (or a "goes here" placeholder if no link yet) ──────────────────────
 function buildAR(group) {
   const stage = document.createElement('div');
+  const embedUrl = extractEmbedUrl(group.arEmbedSrc);
 
-  if (/^https?:/i.test(group.arEmbedSrc || '')) {
+  if (embedUrl) {
     stage.className = 'ar-stage reveal reveal--scale';
     stage.innerHTML = `
       <div class="aureole"></div>
@@ -279,7 +288,7 @@ function buildAR(group) {
                 loading="lazy" allowfullscreen
                 allow="${group.arPermissions || ''}" style="border:none;"></iframe>
       </div>`;
-    stage.querySelector('iframe').src = group.arEmbedSrc;
+    stage.querySelector('iframe').src = embedUrl;
   } else {
     stage.className = 'ar-placeholder reveal reveal--scale';
     stage.innerHTML = `
