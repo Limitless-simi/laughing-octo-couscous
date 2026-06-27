@@ -72,11 +72,12 @@ allow='camera;autoplay;xr-spatial-tracking' style="border: transparent"></iframe
 
     // ════════════════════ GROUP THREE (edit me) ════════════════════
     {
-      groupName:    "Group Three",
-      objectTitle:  "Your Object Title Here",
-      contributors: ["Team member 1", "Team member 2", "Team member 3"],
+      groupName:    "The Immersive Creatives",
+      objectTitle:  "Montgomery Artifacts ",
+      contributors: ["David Ekanem", "Omobowale", "Yohanna Waliya", "Uangbaoje Faith", "Ogbonna Precious"],
 
-      arEmbedSrc:    "PASTE-YOUR-WEB-AR-EMBED-LINK-HERE",
+      arEmbedSrc:    "<iframe src='https://projects.web-ar.studio/configurator/a4798e429c/?id=2694488929_494112&is_transparent_bg=true&activate_ar=true' allowFullScreen
+allow='camera;autoplay;xr-spatial-tracking' style="border: transparent"></iframe>",
       arPermissions: "camera;autoplay;xr-spatial-tracking",
 
       // Add your audio file to the /music folder, then set the path below,
@@ -86,8 +87,9 @@ allow='camera;autoplay;xr-spatial-tracking' style="border: transparent"></iframe
       musicArtist: "Group Three",
 
       story: [
-        "Write your first paragraph here. Introduce your cultural object — what it is, where it comes from, and roughly when it was made.",
-        "In a quiet workshop, a 3D scanner was pointed at an artificial fern a plant that had never grown from soil, never reached toward light. The device made no distinction. It measured every curve, every synthetic vein, every molded edge with the same precision it would give a living thing. Point by point, a digital record assembled itself on the screen, faithful and unhurried.",
+        "This Montgomery artefact is captured on the 27th June 2026at the 14 Montgomery Road, Yaba, Lagos. It is created as a memorial of the benevolence of the ARVRAfrica, Goethe Institute and Imisi3D who trained us on preserving Nigerian Cultural heritage.",
+        "We, the Massive Creators Team believes in all possibilities. This day, we have stepped into the world of XR immersive experience. We believe in restoring the lost history and cultural heritage of Nigeria and Africa.
+",
         "What emerged was a small study in how humans relate to nature. First we imitate it, shaping plastic into leaves and wire into stems. Then we document the imitation, preserving it in data as though it were worth remembering. The scanner captured nothing wild or alive that day yet somehow, in the act of capturing, it asked a quiet question: what exactly are we trying to hold onto?",
       ],
 
