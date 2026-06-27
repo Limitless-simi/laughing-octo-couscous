@@ -46,11 +46,12 @@ const CONFIG = {
 
     // ════════════════════ GROUP TWO (edit me) ════════════════════
     {
-      groupName:    "Group Two",
-      objectTitle:  "Your Object Title Here",
-      contributors: ["Team member 1", "Team member 2", "Team member 3"],
+      groupName:    "Nature's Guardians",
+      objectTitle:  "artificial palm in vase",
+      contributors: ["Nike", "Ugo", "Elijah", "Adex", "Dotun"],
 
-      arEmbedSrc:    "PASTE-YOUR-WEB-AR-EMBED-LINK-HERE",
+      arEmbedSrc:    "<iframe src='https://projects.web-ar.studio/configurator/2d12d111f6/?id=2694488929_494106&is_transparent_bg=true&activate_ar=true' allowFullScreen
+allow='camera;autoplay;xr-spatial-tracking' style="border: transparent"></iframe>",
       arPermissions: "camera;autoplay;xr-spatial-tracking",
 
       // Add your audio file to the /music folder, then set the path below,
@@ -60,7 +61,7 @@ const CONFIG = {
       musicArtist: "Group Two",
 
       story: [
-        "Write your first paragraph here. Introduce your cultural object — what it is, where it comes from, and roughly when it was made.",
+        "They said the forests were gone. No one believed the old gardener when he whispered that the last sacred palm still lived—not in a jungle, but in a weathered flower pot by his doorstep. Every dawn, he watered it like a prayer, hoping the world would remember what it had forgotten.",
         "Write your second paragraph here. Explain its meaning, materials, or the people connected to it.",
         "Write your third paragraph here. Why does it still matter today?",
       ],
@@ -86,8 +87,8 @@ const CONFIG = {
 
       story: [
         "Write your first paragraph here. Introduce your cultural object — what it is, where it comes from, and roughly when it was made.",
-        "Write your second paragraph here. Explain its meaning, materials, or the people connected to it.",
-        "Write your third paragraph here. Why does it still matter today?",
+        "In a quiet workshop, a 3D scanner was pointed at an artificial fern a plant that had never grown from soil, never reached toward light. The device made no distinction. It measured every curve, every synthetic vein, every molded edge with the same precision it would give a living thing. Point by point, a digital record assembled itself on the screen, faithful and unhurried.",
+        "What emerged was a small study in how humans relate to nature. First we imitate it, shaping plastic into leaves and wire into stems. Then we document the imitation, preserving it in data as though it were worth remembering. The scanner captured nothing wild or alive that day yet somehow, in the act of capturing, it asked a quiet question: what exactly are we trying to hold onto?",
       ],
 
       pullQuote:       "",
