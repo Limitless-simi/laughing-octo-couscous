@@ -5,7 +5,7 @@
 const CONFIG = {
 
   // ── SHARED SITE HEADER (top of the page) ──────────────────────────
-  siteLabel:    "A Collective Exhibition · Cultural Artefacts in AR",
+  siteLabel:    "A Collective Exhibition · PhotogrammetricArtefacts in AR",
   siteTitle:    "Objects of Memory",
   siteSubtitle: "Three groups. Three artefacts. One shared archive.",
 
@@ -20,31 +20,7 @@ const CONFIG = {
   //   • pullQuote    → an optional highlighted line (leave "" to skip)
   groups: [
 
-    // ════════════════════ GROUP ONE (worked example) ════════════════════
-    {
-      groupName:    "Group One",
-      objectTitle:  "The Queen Idia Mask",
-      contributors: ["Add your name", "Add your name", "Add your name"],
-
-      arEmbedSrc:    "https://projects.web-ar.studio/configurator/870b17b547/?id=2694488929_488938&is_transparent_bg=true&activate_ar=true",
-      arPermissions: "camera;autoplay;xr-spatial-tracking",
-
-      musicSrc:    "music/voice-over.mp3",
-      musicTrack:  "The Queen Idia Mask — Narration",
-      musicArtist: "FESTAC ’77 · Benin Kingdom",
-
-      story: [
-        "The Queen Idia mask — also known as the Benin ivory pendant mask or Queen Mother pendant mask — is one of the most celebrated works of art from the Benin Kingdom, in present-day Nigeria. Carved in the 16th century, it is believed to represent Iyoba Idia, mother of Oba Esigie, who ruled Benin in the early 1500s. Worked in ivory with metal inlay, it was worn by the Oba during important court ceremonies, especially rituals connected to protection and spiritual power.",
-        "Idia was remembered in Benin history as a powerful and influential mother of a king — in Edo tradition, “the only woman who went to war.” In her honour, Oba Esigie created the title of Iyoba, or Queen Mother, in gratitude for her support and her contributions to his military success. The mask’s details carry meaning of their own: the ivory speaks of purity, while the iron inlays set near the eyes symbolise strength and medicinal power.",
-        "The mask drew renewed global attention in 1977, when Nigeria hosted FESTAC ’77 — the Second World Black and African Festival of Arts and Culture. The Queen Idia mask was chosen as the festival emblem because it embodied African heritage, royal dignity, and resistance to cultural loss. Since the original had been taken from Benin during the British punitive expedition of 1897, the Edo artist Erhabor Emokpae was commissioned to recreate it, turning the mask into a powerful symbol of cultural pride and historical memory.",
-        "Today, the Queen Idia mask remains an enduring symbol of Benin artistry and Nigerian cultural identity. It is admired not only as a masterpiece of African court art, but as a reminder of the value of heritage, the resilience of memory, and the importance of preserving cultural treasures for the generations still to come.",
-      ],
-
-      pullQuote:       "The only woman who went to war.",
-      pullQuoteSource: "— Edo tradition, of Iyoba Idia",
-    },
-
-    // ════════════════════ GROUP TWO (edit me) ════════════════════
+    // ════════════════════ GROUP ONE (moved from the former Group Two) ════════════════════
     {
       groupName:    "Nature's Guardians",
       objectTitle:  "artificial palm in vase",
@@ -55,9 +31,9 @@ const CONFIG = {
 
       // Add your audio file to the /music folder, then set the path below,
       // e.g. musicSrc: "music/group-two.mp3"  (leave "" to hide the player)
-      musicSrc:    "",
-      musicTrack:  "Track title",
-      musicArtist: "Group Two",
+      musicSrc:    "music/voice-over.mp3",
+      musicTrack:  "Object of Memory",
+      musicArtist: "ARVR Africa - Meeting of Minds",
 
       story: [
         "They said the forests were gone. No one believed the old gardener when he whispered that the last sacred palm still lived—not in a jungle, but in a weathered flower pot by his doorstep. Every dawn, he watered it like a prayer, hoping the world would remember what it had forgotten.",
@@ -69,7 +45,7 @@ const CONFIG = {
       pullQuoteSource: "",
     },
 
-    // ════════════════════ GROUP THREE (edit me) ════════════════════
+    // ════════════════════ GROUP TWO (moved from the former Group Three) ════════════════════
     {
       groupName:    "The Immersive Creatives",
       objectTitle:  "Montgomery Artifacts ",
@@ -92,6 +68,30 @@ const CONFIG = {
 
       pullQuote:       "",
       pullQuoteSource: "",
+    },
+
+    // ════════════════════ GROUP THREE (moved from the former Group One) ════════════════════
+    {
+      groupName:    "Group One",
+      objectTitle:  "The Queen Idia Mask",
+      contributors: ["Add your name", "Add your name", "Add your name"],
+
+      arEmbedSrc:    "https://projects.web-ar.studio/configurator/870b17b547/?id=2694488929_488938&is_transparent_bg=true&activate_ar=true",
+      arPermissions: "camera;autoplay;xr-spatial-tracking",
+
+      musicSrc:    "",
+      musicTrack:  "",
+      musicArtist: "",
+
+      story: [
+        "The Queen Idia mask — also known as the Benin ivory pendant mask or Queen Mother pendant mask — is one of the most celebrated works of art from the Benin Kingdom, in present-day Nigeria. Carved in the 16th century, it is believed to represent Iyoba Idia, mother of Oba Esigie, who ruled Benin in the early 1500s. Worked in ivory with metal inlay, it was worn by the Oba during important court ceremonies, especially rituals connected to protection and spiritual power.",
+        "Idia was remembered in Benin history as a powerful and influential mother of a king — in Edo tradition, “the only woman who went to war.” In her honour, Oba Esigie created the title of Iyoba, or Queen Mother, in gratitude for her support and her contributions to his military success. The mask’s details carry meaning of their own: the ivory speaks of purity, while the iron inlays set near the eyes symbolise strength and medicinal power.",
+        "The mask drew renewed global attention in 1977, when Nigeria hosted FESTAC ’77 — the Second World Black and African Festival of Arts and Culture. The Queen Idia mask was chosen as the festival emblem because it embodied African heritage, royal dignity, and resistance to cultural loss. Since the original had been taken from Benin during the British punitive expedition of 1897, the Edo artist Erhabor Emokpae was commissioned to recreate it, turning the mask into a powerful symbol of cultural pride and historical memory.",
+        "Today, the Queen Idia mask remains an enduring symbol of Benin artistry and Nigerian cultural identity. It is admired not only as a masterpiece of African court art, but as a reminder of the value of heritage, the resilience of memory, and the importance of preserving cultural treasures for the generations still to come.",
+      ],
+
+      pullQuote:       "The only woman who went to war.",
+      pullQuoteSource: "— Edo tradition, of Iyoba Idia",
     },
 
   ],
@@ -128,6 +128,7 @@ CONFIG.groups.forEach((group, index) => {
   section.style.setProperty('--accent', ACCENTS[index % ACCENTS.length]);
 
   section.appendChild(buildHeader(group, index));
+  // Keep the audio player in its original position beneath the header.
   if (group.musicSrc) section.appendChild(buildPlayer(group));
   section.appendChild(buildAR(group));
   section.appendChild(buildStory(group));
