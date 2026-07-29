@@ -5,7 +5,7 @@
 const CONFIG = {
 
   // ── SHARED SITE HEADER (top of the page) ──────────────────────────
-  siteLabel:    "A Collective Exhibition · PhotogrammetricArtefacts in AR",
+  siteLabel:    "A Collective Exhibition · Photogrammetric Artefacts in AR",
   siteTitle:    "Objects of Memory",
   siteSubtitle: "Three groups. Three artefacts. One shared archive.",
 
